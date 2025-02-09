@@ -2,6 +2,17 @@
 import { useState } from 'react'
 import axios from 'axios'
 
+interface ResultComponents {
+  base_rate: number
+  risk_premium: number
+}
+
+interface Result {
+  interest_rate: number
+  default_probability: number
+  components: ResultComponents
+}
+
 export default function Home() {
   const [inputs, setInputs] = useState({
     loan_amount: 500,
@@ -12,11 +23,7 @@ export default function Home() {
     existing_debt_ratio: 30
   })
   
-  const [result, setResult] = useState<{
-    interest_rate: number
-    default_probability: number
-    components: any
-  } | null>(null)
+  const [result, setResult] = useState<Result | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -31,7 +38,7 @@ export default function Home() {
       })
       setResult(response.data)
       setError('')
-    } catch (err) {
+    } catch {
       setError('Failed to calculate rate. Please check inputs.')
     }
     setLoading(false)

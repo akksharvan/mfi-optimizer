@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     return NextResponse.json(data)
     
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { error: 'Prediction service unavailable' },
       { status: 500 }
